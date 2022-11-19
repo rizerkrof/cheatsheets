@@ -1,0 +1,21 @@
+#+title: Python
+
+* Create python environment
+** Install conda
+Download installation script from [[https://docs.conda.io/en/latest/miniconda.html][miniconda sources]]
+#+begin_src sh
+cd path/to/script
+chmod 755 Miniconda3_latest_linux_x86_64.sh
+#+end_src
+** Create environment from yml environment file
+#+begin_src sh
+conda env create -f environment.yml -n env_name
+#+end_src
+** Run environment
+#+begin_src sh
+conda activate env_name
+#+end_src
+** Stop environment
+#+begin_src sh
+conda deactivate
+#+end_src
