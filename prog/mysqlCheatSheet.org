@@ -1,0 +1,92 @@
+#+title: Mysql
+
+* Remove MySql
+#+begin_src sh
+sudo apt remove mysql mysql-server
+sudo apt remove --purge mysql-server
+sudo apt purge mysql-server
+sudo apt autoremove
+sudo apt autoclean
+sudo apt remove dbconfig-mysql
+#+end_src
+
+* Install MySql
+#+begin_src sh
+sudo apt update
+sudo apt upgrade
+sudo apt install mysql-server
+#+end_src
+Secure the installation :
+#+begin_src sh
+sudo mysql_secure_installation
+#+end_src
+
+* MySql service
+** Check service
+#+begin_src sh
+sudo systemctl status mysql
+#+end_src
+** Stop service
+#+begin_src sh
+sudo systemctl stop mysql
+#+end_src
+** start service
+#+begin_src sh
+sudo systemctl start mysql
+#+end_src
+
+* Manage user and privileges
+| Description                | Command                                                                          |
+|----------------------------+----------------------------------------------------------------------------------|
+| Create user                | ~CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';~                     |
+| Grant all privileges       | ~GRANT ALL PRIVILEGES ON * . * TO 'new_user'@'localhost';~                         |
+| Apply changes immediately  | ~FLUSH PRIVILEGES;~                                                                |
+| Grant specific permissions | ~GRANT CREATE, SELECT ON * . * TO 'user_name'@'localhost';~                        |
+| Delete user                | ~DROP USER ‘user_name’@‘localhost’;~                                               |
+| Revoke permissions         | ~REVOKE PERMISSION_TYPE ON database_name.table_name FROM ‘user_name’@‘localhost’;~ |
+
+Permission list:
+| Description                                      | Permission |
+|--------------------------------------------------+------------|
+| Enable users to create a database or table       | ~CREATE~     |
+| Permit users to retrieve data                    | ~SELECT~     |
+| Let users add new entries in tables              | ~INSERT~     |
+| Allow users to modify existing entries in tables | ~UPDATE~     |
+| Enable users to erase table entries              | ~DELETE~     |
+| Let users delete entire database tables          | ~DROP~       |
+
+* Useful commands in prompt
+Enter prompt
+#+begin_src sh
+mysql
+#+end_src
+
+commands table:
+
+| Description         | Command                                                      |
+|---------------------+--------------------------------------------------------------|
+| Create user         | ~CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';~ |
+| Load sql dump file  | ~mysql -u username -p database_name < file.sql;~               |
+| Show all databases  | ~SHOW DATABASES;~                                              |
+| Select a database   | ~USE name_of_database;~                                        |
+| Show all table      | ~SHOW TABLES;~                                                 |
+| Print table content | ~SELECT * FROM name_of_table;~                                 |
+
+* Connection
+#+begin_src sh
+mysql -u username -p
+#+end_src
+
+* Troubleshooting
+** Error 1054
+If ~mysql -u root -p~ doesn't work:
+#+begin_src sh
+sudo /etc/init.d/mysql stop
+sudo service mysql stop
+sudo mkdir -p /var/run/mysqld
+sudo chown mysql:mysql /var/run/mysqld
+sudo mysqld_safe --skip-grant-tables &
+sudo mysql -u root
+mysql> use mysql;
+mysql> update user set authentication_string=password('1234') where user='root';
+#+end_src
