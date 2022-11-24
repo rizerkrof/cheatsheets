@@ -78,7 +78,7 @@ mysql -u username -p
 #+end_src
 
 * Troubleshooting
-** Error 1054
+** Error 1045
 If ~mysql -u root -p~ doesn't work:
 #+begin_src sh
 sudo /etc/init.d/mysql stop
@@ -88,5 +88,6 @@ sudo chown mysql:mysql /var/run/mysqld
 sudo mysqld_safe --skip-grant-tables &
 sudo mysql -u root
 mysql> use mysql;
-mysql> update user set authentication_string=password('1234') where user='root';
+mysql> FLUSH PRIVILEGES;
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'root_password';
 #+end_src
