@@ -7,15 +7,34 @@ Download installation script from [[https://docs.conda.io/en/latest/miniconda.ht
 cd path/to/script
 chmod 755 Miniconda3_latest_linux_x86_64.sh
 #+end_src
-** Create environment from yml environment file
-#+begin_src sh
-conda env create -f environment.yml -n env_name
-#+end_src
-** Run environment
-#+begin_src sh
-conda activate env_name
-#+end_src
-** Stop environment
-#+begin_src sh
-conda deactivate
-#+end_src
+** Conda run environment
+
+| description        | command                 |
+|--------------------+-------------------------|
+| select environment | ~conda activate env_name~ |
+| stop environment   | ~conda deactivate~        |
+
+** Environment management
+
+| description                            | command                                              |
+|----------------------------------------+------------------------------------------------------|
+| create environment                     | ~conda create -n env_name~                             |
+| create environment with python version | ~conda create -n env_name python=3.10~                 |
+| clone environment                      | ~conda create --clone env_name -n new_env_name~        |
+| create environment from .txt file      | ~conda create -n env_name -f file_name.txt~            |
+| create environment from .yml file      | ~conda env create -n env_name -f file_name.yml~        |
+| list all environments                  | ~conda env list~                                       |
+| rename environment                     | ~conda rename -n env_name new_env_name~                |
+| delete environment                     | ~conda remove -n env_name --all~                       |
+| list all revisions                     | ~conda list -n env_name --revisions~                   |
+| roll back to revision                  | ~conda install -n env_name --revision revision_number~ |
+| generate environment file              | ~conda env export env_name>environment.yml~            |
+
+** Package management
+
+| description                     | command                                               |
+|---------------------------------+-------------------------------------------------------|
+| update conda packages           | ~conda update --all~                                    |
+| update environment packages     | ~conda update --all -n env_name~                        |
+| install packages in environment | ~conda install -n env_name package_name1 package_name2~ |
+| remove package from environment | ~conda uninstall package_name -n env_name~              |
